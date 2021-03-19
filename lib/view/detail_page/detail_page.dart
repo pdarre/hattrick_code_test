@@ -113,7 +113,8 @@ class BuildDetailPageLoaded extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    getTextWidgets(drink.ingredientes),
+                                    getTextWidgets(
+                                        drink.ingredientes, drink.measures),
                                   ],
                                 ),
                               ),
@@ -157,10 +158,11 @@ class BuildDetailPageLoaded extends StatelessWidget {
   }
 }
 
-Widget getTextWidgets(List<String> strings) {
+Widget getTextWidgets(List<String> ingredients, List<String> measures) {
   List<Widget> list = [];
-  for (var i = 0; i < strings.length; i++) {
-    list.add(new Text(strings[i]));
+  for (var i = 0; i < ingredients.length; i++) {
+    // list.add(new Text(ingredients[i]));
+    list.add(Text('${ingredients[i]} ${measures[i]}'));
   }
   return new Column(
     crossAxisAlignment: CrossAxisAlignment.start,
