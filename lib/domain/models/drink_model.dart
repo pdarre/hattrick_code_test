@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Drink {
   List<Drinks> drinks;
 
@@ -73,59 +75,62 @@ class Drinks {
   Null strImageAttribution;
   String strCreativeCommonsConfirmed;
   String dateModified;
+  List<String> ingredientes;
 
-  Drinks(
-      {this.idDrink,
-      this.strDrink,
-      this.strDrinkAlternate,
-      this.strTags,
-      this.strVideo,
-      this.strCategory,
-      this.strIBA,
-      this.strAlcoholic,
-      this.strGlass,
-      this.strInstructions,
-      this.strInstructionsES,
-      this.strInstructionsDE,
-      this.strInstructionsFR,
-      this.strInstructionsIT,
-      this.strInstructionsZHHANS,
-      this.strInstructionsZHHANT,
-      this.strDrinkThumb,
-      this.strIngredient1,
-      this.strIngredient2,
-      this.strIngredient3,
-      this.strIngredient4,
-      this.strIngredient5,
-      this.strIngredient6,
-      this.strIngredient7,
-      this.strIngredient8,
-      this.strIngredient9,
-      this.strIngredient10,
-      this.strIngredient11,
-      this.strIngredient12,
-      this.strIngredient13,
-      this.strIngredient14,
-      this.strIngredient15,
-      this.strMeasure1,
-      this.strMeasure2,
-      this.strMeasure3,
-      this.strMeasure4,
-      this.strMeasure5,
-      this.strMeasure6,
-      this.strMeasure7,
-      this.strMeasure8,
-      this.strMeasure9,
-      this.strMeasure10,
-      this.strMeasure11,
-      this.strMeasure12,
-      this.strMeasure13,
-      this.strMeasure14,
-      this.strMeasure15,
-      this.strImageSource,
-      this.strImageAttribution,
-      this.strCreativeCommonsConfirmed,
-      this.dateModified});
+  Drinks({
+    this.idDrink,
+    this.strDrink,
+    this.strDrinkAlternate,
+    this.strTags,
+    this.strVideo,
+    this.strCategory,
+    this.strIBA,
+    this.strAlcoholic,
+    this.strGlass,
+    this.strInstructions,
+    this.strInstructionsES,
+    this.strInstructionsDE,
+    this.strInstructionsFR,
+    this.strInstructionsIT,
+    this.strInstructionsZHHANS,
+    this.strInstructionsZHHANT,
+    this.strDrinkThumb,
+    this.strIngredient1,
+    this.strIngredient2,
+    this.strIngredient3,
+    this.strIngredient4,
+    this.strIngredient5,
+    this.strIngredient6,
+    this.strIngredient7,
+    this.strIngredient8,
+    this.strIngredient9,
+    this.strIngredient10,
+    this.strIngredient11,
+    this.strIngredient12,
+    this.strIngredient13,
+    this.strIngredient14,
+    this.strIngredient15,
+    this.strMeasure1,
+    this.strMeasure2,
+    this.strMeasure3,
+    this.strMeasure4,
+    this.strMeasure5,
+    this.strMeasure6,
+    this.strMeasure7,
+    this.strMeasure8,
+    this.strMeasure9,
+    this.strMeasure10,
+    this.strMeasure11,
+    this.strMeasure12,
+    this.strMeasure13,
+    this.strMeasure14,
+    this.strMeasure15,
+    this.strImageSource,
+    this.strImageAttribution,
+    this.strCreativeCommonsConfirmed,
+    this.dateModified,
+    this.ingredientes,
+  });
 
   Drinks.fromJson(Map<String, dynamic> json) {
     idDrink = json['idDrink'];
@@ -145,6 +150,17 @@ class Drinks {
     strInstructionsZHHANS = json['strInstructionsZH-HANS'];
     strInstructionsZHHANT = json['strInstructionsZH-HANT'];
     strDrinkThumb = json['strDrinkThumb'];
+    ingredientes = [];
+    for (var i = 1; i <= 15; i++) {
+      String temp = 'strIngredient' + i.toString();
+      String ing = json[temp];
+      if (json[temp] != null) {
+        // if (ing != null) {
+        // ingredientes.add(ing);
+        print(ing);
+        ingredientes.add(ing);
+      }
+    }
     strIngredient1 = json['strIngredient1'];
     strIngredient2 = json['strIngredient2'];
     strIngredient3 = json['strIngredient3'];

@@ -1,4 +1,4 @@
 class Constants {
-  static final baseUrl = '';
-  static final apiKey = '';
+  static final baseUrl = 'https://www.thecocktaildb.com/api/json/v1/';
+  static final apiKey = '1';
 }

@@ -68,81 +68,81 @@ class BuildDetailPageLoaded extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
       ),
-      body: Container(
-        margin: EdgeInsets.all(20),
-        child: Center(
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    child: FadeInImage(
-                      placeholder: AssetImage('assets/images/loading.gif'),
-                      image: NetworkImage('${drink.strDrinkThumb}'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FadeIn(
-                            delay: Duration(milliseconds: 200),
-                            child: const Text(
-                              'Ingredients',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black54,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.all(10),
-                            child: FadeIn(
-                              delay: Duration(milliseconds: 300),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('${drink.strIngredient1}'),
-                                  Text('${drink.strIngredient2}'),
-                                  Text('${drink.strIngredient3}'),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+      body: SingleChildScrollView(
+        child: Container(
+          margin: EdgeInsets.all(20),
+          child: Center(
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.all(20),
+                      child: FadeInImage(
+                        placeholder: AssetImage('assets/images/loading.gif'),
+                        image: NetworkImage('${drink.strDrinkThumb}'),
+                        fit: BoxFit.cover,
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: [
-                      FadeIn(
-                        delay: Duration(milliseconds: 500),
-                        child: const Text(
-                          'How to prepare',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black54,
-                          ),
-                          overflow: TextOverflow.ellipsis,
+                    ),
+                    Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FadeIn(
+                              delay: Duration(milliseconds: 200),
+                              child: const Text(
+                                'Ingredients',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.all(10),
+                              child: FadeIn(
+                                delay: Duration(milliseconds: 300),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    getTextWidgets(drink.ingredientes),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  FadeIn(
-                    delay: Duration(milliseconds: 600),
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      child: Text('${drink.strInstructions}'),
+                      ],
                     ),
-                  ),
-                ],
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        FadeIn(
+                          delay: Duration(milliseconds: 500),
+                          child: const Text(
+                            'How to prepare',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black54,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    FadeIn(
+                      delay: Duration(milliseconds: 600),
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        child: Text('${drink.strInstructions}'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -150,4 +150,15 @@ class BuildDetailPageLoaded extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget getTextWidgets(List<String> strings) {
+  List<Widget> list = [];
+  for (var i = 0; i < strings.length; i++) {
+    list.add(new Text(strings[i]));
+  }
+  return new Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: list,
+  );
 }
