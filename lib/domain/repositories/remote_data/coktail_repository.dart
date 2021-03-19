@@ -18,13 +18,12 @@ class CoktailRepository implements CoktailRepositoryInterface {
   }
 
   @override
-  Future<Drink> getCoktailById(String coktailId) async {
+  Future<Drinks> getCoktailById(String drinkId) async {
     try {
       Response response = await Dio().get(
-          'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=16108');
-      Drink drink = response.data.map((item) => Drink.fromJson(item.data()));
-      print(drink);
-      return drink;
+          'https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=$drinkId');
+      List<Drinks> drinks = Drink.fromJson(response.data).drinks;
+      return drinks[0];
     } catch (e) {
       throw Error();
     }

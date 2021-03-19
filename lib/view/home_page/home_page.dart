@@ -25,6 +25,7 @@ class BuildInitialHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100],
       body: Container(
         child: Center(
           child: ElevatedButton(
@@ -43,6 +44,7 @@ class BuildLoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100],
       body: Container(
         child: Center(
           child: const CircularProgressIndicator(),
@@ -58,6 +60,7 @@ class BuildHomePageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100],
       body: Container(
         child: Center(
           child: Text('$error'),
@@ -73,6 +76,7 @@ class BuildHomePageLoaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[100],
       body: (drinkList != null)
           ? ListView.builder(
               itemCount: drinkList.length,
@@ -94,7 +98,8 @@ class BuildDrinkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print('${drink.idDrink}');
+        Navigator.of(context)
+            .pushNamed('/detail-page', arguments: drink.idDrink);
       },
       child: Card(
           shape:
