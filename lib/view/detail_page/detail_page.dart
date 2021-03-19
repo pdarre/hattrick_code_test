@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -73,23 +74,29 @@ class BuildDrinkDetail extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Ingredients',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54,
+                          FadeIn(
+                            delay: Duration(milliseconds: 200),
+                            child: const Text(
+                              'Ingredients',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54,
+                              ),
                             ),
                           ),
                           Container(
                             margin: EdgeInsets.all(10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${drink.strIngredient1}'),
-                                Text('${drink.strIngredient2}'),
-                                Text('${drink.strIngredient3}'),
-                              ],
+                            child: FadeIn(
+                              delay: Duration(milliseconds: 300),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('${drink.strIngredient1}'),
+                                  Text('${drink.strIngredient2}'),
+                                  Text('${drink.strIngredient3}'),
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -99,20 +106,26 @@ class BuildDrinkDetail extends StatelessWidget {
                   SizedBox(height: 10),
                   Row(
                     children: [
-                      const Text(
-                        'How to prepare',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54,
+                      FadeIn(
+                        delay: Duration(milliseconds: 500),
+                        child: const Text(
+                          'How to prepare',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    child: Text('${drink.strInstructions}'),
+                  FadeIn(
+                    delay: Duration(milliseconds: 600),
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      child: Text('${drink.strInstructions}'),
+                    ),
                   ),
                 ],
               ),

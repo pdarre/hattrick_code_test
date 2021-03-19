@@ -1,5 +1,7 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../domain/models/drink_model.dart';
 import '../../domain/providers_references/future_providers.dart';
 
@@ -85,7 +87,10 @@ class BuildHomePageLoaded extends StatelessWidget {
           ? ListView.builder(
               itemCount: drinkList.length,
               itemBuilder: (context, index) {
-                return BuildDrinkCard(drink: drinkList[index]);
+                return FadeInRight(
+                  delay: Duration(milliseconds: 50 * index),
+                  child: BuildDrinkCard(drink: drinkList[index]),
+                );
               },
             )
           : Container(
