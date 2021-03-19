@@ -13,7 +13,7 @@ class CoktailRepository implements CoktailRepositoryInterface {
       return drinks;
     } catch (e) {
       print(e.toString());
-      throw Error();
+      throw Exception(e.toString());
     }
   }
 
@@ -25,7 +25,7 @@ class CoktailRepository implements CoktailRepositoryInterface {
       List<Drinks> drinks = Drink.fromJson(response.data).drinks;
       return drinks[0];
     } catch (e) {
-      throw Error();
+      throw Exception(e.toString());
     }
   }
 }

@@ -3,22 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/drink_model.dart';
-import '../../domain/providers_references/future_providers.dart';
+import '../../domain/providers_references/providers.dart';
+import '../../view_models/detail_page_viewmodel/detail_page_states.dart';
 
 class DetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
-    final String drinkId = ModalRoute.of(context).settings.arguments;
-    final getDrinkById = watch(getDrinkByIdFutureProvider(drinkId));
-    return getDrinkById.when(
-      loading: () => BuildLoading(),
-      error: (Object error, stack) => BuildError(message: error.toString()),
-      data: (drink) => BuildDrinkDetail(drink: drink),
-    );
+    final detailProvider = watch(detailPageProvider.state);
+    if (detailProvider is DetailPageLoading) {
+      return BuildDetailPageLoading();
+    } else if (detailProvider is DetailPageError) {
+      return BuildDetailPageError(error: detailProvider.error);
+    } else if (detailProvider is DetailPageLoaded) {
+      return BuildDetailPageLoaded(drink: detailProvider.drink);
+    } else {
+      return BuildDetailPageInitial();
+    }
   }
 }
 
-class BuildLoading extends StatelessWidget {
+class BuildDetailPageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,18 +32,29 @@ class BuildLoading extends StatelessWidget {
   }
 }
 
-class BuildError extends StatelessWidget {
-  final String message;
-  const BuildError({this.message});
+class BuildDetailPageError extends StatelessWidget {
+  final String error;
+  const BuildDetailPageError({this.error});
   @override
   Widget build(BuildContext context) {
     return Container();
   }
 }
 
-class BuildDrinkDetail extends StatelessWidget {
+class BuildDetailPageInitial extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: const Text('Iniating...'),
+      ),
+    );
+  }
+}
+
+class BuildDetailPageLoaded extends StatelessWidget {
   final Drinks drink;
-  const BuildDrinkDetail({this.drink});
+  const BuildDetailPageLoaded({this.drink});
 
   @override
   Widget build(BuildContext context) {

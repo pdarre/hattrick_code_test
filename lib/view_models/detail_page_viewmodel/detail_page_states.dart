@@ -12,6 +12,6 @@ class DetailPageError implements DetailPageState {
 }
 
 class DetailPageLoaded implements DetailPageState {
-  final Drink drink;
+  final Drinks drink;
   const DetailPageLoaded(this.drink);
 }

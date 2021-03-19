@@ -4,49 +4,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/drink_model.dart';
 import '../../domain/providers_references/future_providers.dart';
+import '../../domain/providers_references/providers.dart';
 
 class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
     final getAllDrinks = watch(getAllDrinksFutureProvider);
     return getAllDrinks.when(
-      loading: () => BuildLoadingPage(),
+      loading: () => BuildHomePageLoading(),
       error: (error, stack) => BuildHomePageError(error: error.toString()),
       data: (data) => BuildHomePageLoaded(drinkList: data),
     );
-    // final homeProvider = watch(homePageProvider.state);
-    // if (homeProvider is HomePageLoading) {
-    //   return BuildLoadingPage();
-    // } else if (homeProvider is HomePageError) {
-    //   return BuildHomePageError(error: homeProvider.error);
-    // } else if (homeProvider is HomePageLoaded) {
-    //   return BuildHomePageLoaded(drinkList: homeProvider.list);
-    // } else {
-    //   return BuildInitialHomePage();
-    // }
   }
 }
 
-// class BuildInitialHomePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.blue[100],
-//       body: Container(
-//         child: Center(
-//           child: ElevatedButton(
-//             onPressed: () {
-//               context.read(homePageProvider).getAllDrinks();
-//             },
-//             child: Text('Start'),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-class BuildLoadingPage extends StatelessWidget {
+class BuildHomePageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,8 +79,8 @@ class BuildDrinkCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed('/detail-page', arguments: drink.idDrink);
+        context.read(detailPageProvider).getDrinkById(drink.idDrink);
+        Navigator.of(context).pushNamed('/detail-page');
       },
       child: Card(
           shape:
