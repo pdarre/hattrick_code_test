@@ -1,44 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hatrick_project2/domain/models/drink_model.dart';
-import 'package:hatrick_project2/view_models/home_page_viewmodel/home_page_states.dart';
-
-import '../../domain/providers_references/providers.dart';
+import '../../domain/models/drink_model.dart';
+import '../../domain/providers_references/future_providers.dart';
 
 class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
-    final homeProvider = watch(homePageProvider.state);
-    if (homeProvider is HomePageLoading) {
-      return BuildLoadingPage();
-    } else if (homeProvider is HomePageError) {
-      return BuildHomePageError(error: homeProvider.error);
-    } else if (homeProvider is HomePageLoaded) {
-      return BuildHomePageLoaded(drinkList: homeProvider.list);
-    } else {
-      return BuildInitialHomePage();
-    }
+    final getAllDrinks = watch(getAllDrinksFutureProvider);
+    return getAllDrinks.when(
+      loading: () => BuildLoadingPage(),
+      error: (error, stack) => BuildHomePageError(error: error.toString()),
+      data: (data) => BuildHomePageLoaded(drinkList: data),
+    );
+    // final homeProvider = watch(homePageProvider.state);
+    // if (homeProvider is HomePageLoading) {
+    //   return BuildLoadingPage();
+    // } else if (homeProvider is HomePageError) {
+    //   return BuildHomePageError(error: homeProvider.error);
+    // } else if (homeProvider is HomePageLoaded) {
+    //   return BuildHomePageLoaded(drinkList: homeProvider.list);
+    // } else {
+    //   return BuildInitialHomePage();
+    // }
   }
 }
 
-class BuildInitialHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue[100],
-      body: Container(
-        child: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              context.read(homePageProvider).getAllDrinks();
-            },
-            child: Text('press'),
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class BuildInitialHomePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Colors.blue[100],
+//       body: Container(
+//         child: Center(
+//           child: ElevatedButton(
+//             onPressed: () {
+//               context.read(homePageProvider).getAllDrinks();
+//             },
+//             child: Text('Start'),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class BuildLoadingPage extends StatelessWidget {
   @override

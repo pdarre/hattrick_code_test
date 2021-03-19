@@ -8,3 +8,7 @@ final getDrinkByIdFutureProvider =
     FutureProvider.autoDispose.family<Drinks, String>((ref, drinkId) {
   return ref.watch(coktailRepositoryInterface).getCoktailById(drinkId);
 });
+
+final getAllDrinksFutureProvider = FutureProvider<List<Drinks>>((ref) {
+  return ref.watch(coktailRepositoryInterface).getAllCoktails();
+});
