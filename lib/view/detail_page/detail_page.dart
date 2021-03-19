@@ -162,7 +162,7 @@ Widget getTextWidgets(List<String> ingredients, List<String> measures) {
   List<Widget> list = [];
   for (var i = 0; i < ingredients.length; i++) {
     // list.add(new Text(ingredients[i]));
-    list.add(Text('${ingredients[i]} ${measures[i]}'));
+    list.add(Text('${measures[i]} - ${ingredients[i]}'));
   }
   return new Column(
     crossAxisAlignment: CrossAxisAlignment.start,
