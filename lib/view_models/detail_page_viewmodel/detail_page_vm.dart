@@ -1,19 +1,18 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/interfaces/coctail_repository_interface.dart';
-import '../../domain/models/coktail_model.dart';
+import '../../domain/models/drink_model.dart';
 import 'detail_page_states.dart';
 
 class DetailPageVm extends StateNotifier<DetailPageState> {
   final CoktailRepositoryInterface _coktailRepositoryInterface;
   DetailPageVm(this._coktailRepositoryInterface) : super(DetailPageInitial());
 
-  //BORRAR ESTE METODO, SOLO DE MUESTRA/PRUEBA
-  void algo(String coktailId) {
+  void getDrinkById(String drinkId) async {
     try {
       state = DetailPageLoading();
-      Coktail coktail = _coktailRepositoryInterface.getCoktailById(coktailId);
-      state = DetailPageLoaded(coktail);
+      Drink drink = await _coktailRepositoryInterface.getCoktailById(drinkId);
+      state = DetailPageLoaded(drink);
     } catch (e) {
       state = DetailPageError(error: e.toString());
     }

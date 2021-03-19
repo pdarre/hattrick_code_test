@@ -1,6 +1,6 @@
-import '../../domain/models/coktail_model.dart';
+import '../models/drink_model.dart';
 
 abstract class CoktailRepositoryInterface {
-  List<dynamic> getAllCoktails();
-  Coktail getCoktailById(String coktailId);
+  Future<List<Drinks>> getAllCoktails();
+  Future<Drink> getCoktailById(String drinkId);
 }

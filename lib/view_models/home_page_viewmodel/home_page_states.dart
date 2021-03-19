@@ -1,3 +1,5 @@
+import 'package:hatrick_project2/domain/models/drink_model.dart';
+
 abstract class HomePageState {}
 
 class HomePageInitial implements HomePageState {}
@@ -10,6 +12,6 @@ class HomePageError implements HomePageState {
 }
 
 class HomePageLoaded implements HomePageState {
-  final List<dynamic> list;
+  final List<Drinks> list;
   const HomePageLoaded(this.list);
 }

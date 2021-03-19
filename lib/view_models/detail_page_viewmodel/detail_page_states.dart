@@ -1,4 +1,4 @@
-import '../../domain/models/coktail_model.dart';
+import '../../domain/models/drink_model.dart';
 
 abstract class DetailPageState {}
 
@@ -12,6 +12,6 @@ class DetailPageError implements DetailPageState {
 }
 
 class DetailPageLoaded implements DetailPageState {
-  final Coktail coktail;
-  const DetailPageLoaded(this.coktail);
+  final Drink drink;
+  const DetailPageLoaded(this.drink);
 }

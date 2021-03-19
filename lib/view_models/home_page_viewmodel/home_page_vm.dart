@@ -7,12 +7,11 @@ class HomePageVm extends StateNotifier<HomePageState> {
   final CoktailRepositoryInterface _coktailRepositoryInterface;
   HomePageVm(this._coktailRepositoryInterface) : super(HomePageInitial());
 
-  //BORRAR ESTE METODO, SOLO DE MUESTRA/PRUEBA
-  void algo() {
+  void getAllDrinks() async {
     try {
       state = HomePageLoading();
-      var xxx = _coktailRepositoryInterface.getAllCoktails();
-      state = HomePageLoaded(xxx);
+      var drinkList = await _coktailRepositoryInterface.getAllCoktails();
+      state = HomePageLoaded(drinkList);
     } catch (e) {
       state = HomePageError(error: e.toString());
     }
