@@ -37,7 +37,12 @@ class BuildDetailPageError extends StatelessWidget {
   const BuildDetailPageError({this.error});
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: Colors.blue[100],
+      body: Center(
+        child: Text(error),
+      ),
+    );
   }
 }
 
