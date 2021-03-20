@@ -35,7 +35,7 @@ class Drinks {
   Null strImageAttribution;
   String strCreativeCommonsConfirmed;
   String dateModified;
-  List<String> ingredientes = [];
+  List<String> ingredients = [];
   List<String> measures = [];
 
   Drinks({
@@ -60,7 +60,7 @@ class Drinks {
     this.strImageAttribution,
     this.strCreativeCommonsConfirmed,
     this.dateModified,
-    this.ingredientes,
+    this.ingredients,
   });
 
   Drinks.fromJson(Map<String, dynamic> json) {
@@ -81,20 +81,17 @@ class Drinks {
     strInstructionsZHHANS = json['strInstructionsZH-HANS'];
     strInstructionsZHHANT = json['strInstructionsZH-HANT'];
     strDrinkThumb = json['strDrinkThumb'];
-    // ingredientes = [];
+    strImageSource = json['strImageSource'];
+    strImageAttribution = json['strImageAttribution'];
+    strCreativeCommonsConfirmed = json['strCreativeCommonsConfirmed'];
+    dateModified = json['dateModified'];
     for (var i = 1; i <= 15; i++) {
-      String ing = json['strIngredient' + i.toString()];
-      String measure = json['strMeasure' + i.toString()];
       if (json['strIngredient' + i.toString()] != null) {
-        ingredientes.add(ing);
+        ingredients.add(json['strIngredient' + i.toString()]);
       }
       if (json['strMeasure' + i.toString()] != null) {
-        measures.add(measure);
+        measures.add(json['strMeasure' + i.toString()]);
       }
-      strImageSource = json['strImageSource'];
-      strImageAttribution = json['strImageAttribution'];
-      strCreativeCommonsConfirmed = json['strCreativeCommonsConfirmed'];
-      dateModified = json['dateModified'];
     }
   }
 }

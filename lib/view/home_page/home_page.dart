@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +21,7 @@ class BuildHomePageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Container(
         child: Center(
           child: const CircularProgressIndicator(),
@@ -38,7 +37,7 @@ class BuildHomePageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Container(
         child: Center(
           child: Text('$error'),
@@ -48,42 +47,19 @@ class BuildHomePageError extends StatelessWidget {
   }
 }
 
-class BuildHomePageLoaded extends StatelessWidget {
+class BuildHomePageLoaded extends ConsumerWidget {
   final List<Drinks> drinkList;
   const BuildHomePageLoaded({this.drinkList});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: (drinkList != null)
           ? ListView.builder(
               physics: BouncingScrollPhysics(),
               itemCount: drinkList.length,
-              itemExtent: 60.0,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text('${drinkList[index].strDrink}'),
-                  subtitle: Text('${drinkList[index].idDrink}'),
-                  leading: FadeInImage(
-                    placeholder: AssetImage('assets/images/loading.gif'),
-                    image: NetworkImage('${drinkList[index].strDrinkThumb}'),
-                    fit: BoxFit.fill,
-                  ),
-                  tileColor: Colors.white,
-                  trailing: IconButton(
-                    icon: Icon(Icons.chevron_right),
-                    onPressed: () {
-                      context
-                          .read(detailPageProvider)
-                          .getDrinkById(drinkList[index].idDrink);
-                      Navigator.of(context).pushNamed('/detail-page');
-                    },
-                  ),
-                );
-                // return FadeInRight(
-                //   delay: Duration(milliseconds: 50 * index),
-                //   child: BuildDrinkCard(drink: drinkList[index]),
-                // );
+                return BuildDrinkCard(drink: drinkList[index]);
               },
             )
           : Container(
@@ -104,51 +80,65 @@ class BuildDrinkCard extends StatelessWidget {
         Navigator.of(context).pushNamed('/detail-page');
       },
       child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          margin: EdgeInsets.all(15),
-          elevation: 5,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: Container(
-                  margin: EdgeInsets.only(left: 30),
-                  width: 200,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${drink.strDrink}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
-                      ),
-                      Text('${drink.idDrink}'),
-                    ],
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        margin: EdgeInsets.all(15),
+        elevation: 5,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 3,
+              child: Container(
+                margin: EdgeInsets.only(left: 30),
+                width: 200,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 100,
-                      height: 100,
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        child: FadeInImage(
-                          placeholder: AssetImage('assets/images/loading.gif'),
-                          image: NetworkImage('${drink.strDrinkThumb}'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+                    SizedBox(height: 20),
+                    Text(
+                      '${drink.strDrink}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 24,
+                          color: Colors.black54),
                     ),
+                    Text('${drink.idDrink}'),
+                    // getTextWidgets(drink.ingredients),
                   ],
                 ),
               ),
-            ],
-          )),
+            ),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  SizedBox(
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      child: FadeInImage(
+                        placeholder: AssetImage('assets/images/loading.gif'),
+                        image: NetworkImage('${drink.strDrinkThumb}'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
+}
+
+Widget getTextWidgets(List<String> ingredients) {
+  List<Widget> list = [];
+  for (var i = 0; i < ingredients.length; i++) {
+    list.add(Text('${ingredients[i]}'));
+  }
+  return new Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: list,
+  );
 }
