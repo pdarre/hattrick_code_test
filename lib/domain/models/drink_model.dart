@@ -91,14 +91,6 @@ class Drinks {
       if (json['strMeasure' + i.toString()] != null) {
         measures.add(measure);
       }
-      // measures = [];
-      // for (var x = 1; x <= 15; x++) {
-      //   String measure = json['strMeasure' + x.toString()];
-      //   print(measure);
-      //   if (json['strMeasure' + x.toString()] != null) {
-      //     measures.add(measure);
-      //   }
-      // }
       strImageSource = json['strImageSource'];
       strImageAttribution = json['strImageAttribution'];
       strCreativeCommonsConfirmed = json['strCreativeCommonsConfirmed'];

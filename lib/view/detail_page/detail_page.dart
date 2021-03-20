@@ -78,16 +78,22 @@ class BuildDetailPageLoaded extends StatelessWidget {
           margin: EdgeInsets.all(20),
           child: Center(
             child: Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.all(20),
-                      child: FadeInImage(
-                        placeholder: AssetImage('assets/images/loading.gif'),
-                        image: NetworkImage('${drink.strDrinkThumb}'),
-                        fit: BoxFit.cover,
+                      margin: EdgeInsets.all(10),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: FadeInImage(
+                          placeholder: AssetImage('assets/images/loading.gif'),
+                          image: NetworkImage('${drink.strDrinkThumb}'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Row(
@@ -100,9 +106,9 @@ class BuildDetailPageLoaded extends StatelessWidget {
                               child: const Text(
                                 'Ingredients',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54,
+                                  color: Colors.black45,
                                 ),
                               ),
                             ),
@@ -131,9 +137,9 @@ class BuildDetailPageLoaded extends StatelessWidget {
                           child: const Text(
                             'How to prepare',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black54,
+                              color: Colors.black45,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
