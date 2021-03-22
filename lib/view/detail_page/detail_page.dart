@@ -10,6 +10,7 @@ class DetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
     final detailProvider = watch(detailPageProvider.state);
+
     if (detailProvider is DetailPageLoading) {
       return BuildDetailPageLoading();
     } else if (detailProvider is DetailPageError) {
@@ -26,7 +27,7 @@ class BuildDetailPageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 78, 168, 209),
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(child: CircularProgressIndicator()),
     );
   }
@@ -38,7 +39,7 @@ class BuildDetailPageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 78, 168, 209),
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(
         child: Text(error),
       ),
@@ -50,7 +51,7 @@ class BuildDetailPageInitial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 78, 168, 209),
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(
         child: const Text('Iniating...'),
       ),
@@ -65,11 +66,12 @@ class BuildDetailPageLoaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 78, 168, 209),
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       appBar: AppBar(
         title: Text(
           '${drink.strDrink}',
         ),
+        iconTheme: Theme.of(context).iconTheme,
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -108,13 +110,20 @@ class BuildDetailPageLoaded extends StatelessWidget {
                           children: [
                             FadeIn(
                               delay: Duration(milliseconds: 200),
-                              child: const Text(
-                                'Ingredients',
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black45,
-                                ),
+                              child: Consumer(
+                                builder: (_, watch, __) {
+                                  final themeChanger =
+                                      watch(themeSwitcherProvider);
+                                  return themeChanger.isDark
+                                      ? Text('Ingredients',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1)
+                                      : Text('Ingredients',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1);
+                                },
                               ),
                             ),
                             Container(
@@ -139,14 +148,18 @@ class BuildDetailPageLoaded extends StatelessWidget {
                       children: [
                         FadeIn(
                           delay: Duration(milliseconds: 500),
-                          child: const Text(
-                            'How to prepare',
-                            style: TextStyle(
-                              fontSize: 17,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black45,
-                            ),
-                            overflow: TextOverflow.ellipsis,
+                          child: Consumer(
+                            builder: (context, watch, child) {
+                              final themeChanger = watch(themeSwitcherProvider);
+                              return themeChanger.isDark
+                                  ? Text('How to prepare',
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1)
+                                  : Text('Ingredients',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1);
+                            },
                           ),
                         ),
                       ],

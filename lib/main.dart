@@ -6,11 +6,7 @@ import 'domain/providers_references/providers.dart';
 import 'view/home_page/home_page.dart';
 
 void main() {
-  runApp(
-    ProviderScope(
-      child: MyApp(),
-    ),
-  );
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
@@ -21,16 +17,20 @@ class MyApp extends ConsumerWidget {
       theme: themeSwitcher.isDark
           ? ThemeData.dark().copyWith(
               primaryColor: Color.fromARGB(255, 75, 113, 142),
+              iconTheme: IconThemeData(color: Colors.white70),
               textTheme: TextTheme(
                 headline5: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.grey[400]),
                 bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+                bodyText1: TextStyle(
+                    fontSize: 16.0, fontFamily: 'Hind', color: Colors.white70),
               ),
             )
           : ThemeData.light().copyWith(
               primaryColor: Color.fromARGB(255, 78, 168, 209),
+              iconTheme: IconThemeData(color: Colors.black87),
               textTheme: TextTheme(
                 headline5: TextStyle(
                     fontSize: 20.0,
@@ -38,6 +38,8 @@ class MyApp extends ConsumerWidget {
                     color: Colors.grey[800]),
                 bodyText2: TextStyle(
                     fontSize: 14.0, fontFamily: 'Hind', color: Colors.black),
+                bodyText1: TextStyle(
+                    fontSize: 16.0, fontFamily: 'Hind', color: Colors.black87),
               ),
             ),
       debugShowCheckedModeBanner: false,
