@@ -20,7 +20,7 @@ class Drinks {
   Null strTags;
   Null strVideo;
   String strCategory;
-  Null strIBA;
+  String strIBA;
   String strAlcoholic;
   String strGlass;
   String strInstructions;
@@ -85,6 +85,7 @@ class Drinks {
     strImageAttribution = json['strImageAttribution'];
     strCreativeCommonsConfirmed = json['strCreativeCommonsConfirmed'];
     dateModified = json['dateModified'];
+
     for (var i = 1; i <= 15; i++) {
       if (json['strIngredient' + i.toString()] != null) {
         ingredients.add(json['strIngredient' + i.toString()]);

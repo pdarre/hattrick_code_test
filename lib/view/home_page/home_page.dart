@@ -9,6 +9,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
     final getAllDrinks = watch(getAllDrinksFutureProvider);
+
     return getAllDrinks.when(
       loading: () => BuildHomePageLoading(),
       error: (error, stack) => BuildHomePageError(error: error.toString()),
@@ -56,7 +57,6 @@ class BuildHomePageLoaded extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Container(),
-        // backgroundColor: Color.fromARGB(255, 78, 168, 209),
         actions: [
           IconButton(
             icon: Icon(
@@ -74,6 +74,7 @@ class BuildHomePageLoaded extends ConsumerWidget {
               physics: BouncingScrollPhysics(),
               itemCount: drinkList.length,
               itemBuilder: (context, index) {
+                print('$index');
                 return BuildDrinkCard(drink: drinkList[index]);
               },
             )
@@ -168,7 +169,9 @@ class GetIngredientsWidgets extends StatelessWidget {
         }
         int preresto = ingredients.length - 1;
         int resto = preresto - i;
-        list.add(Text('${resto.toString()} more ingredients'));
+        if (ingredients.length > 3) {
+          list.add(Text('${resto.toString()} more ingredients'));
+        }
         break;
       }
     }
