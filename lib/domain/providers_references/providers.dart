@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hatrick_project2/view_models/theme_switcher_vm/theme_switcher.dart';
 
 import '../../view_models/detail_page_viewmodel/detail_page_vm.dart';
 import '../../view_models/home_page_viewmodel/home_page_vm.dart';
@@ -13,3 +14,5 @@ final homePageProvider = StateNotifierProvider(
 
 final detailPageProvider = StateNotifierProvider(
     (ref) => DetailPageVm(ref.watch(coktailRepositoryInterface)));
+
+final themeSwitcherProvider = ChangeNotifierProvider((ref) => ThemeSwitcher());

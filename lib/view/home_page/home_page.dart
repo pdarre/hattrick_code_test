@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -22,7 +21,7 @@ class BuildHomePageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Container(
         child: Center(
           child: const CircularProgressIndicator(),
@@ -38,7 +37,7 @@ class BuildHomePageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Container(
         child: Center(
           child: Text('$error'),
@@ -48,25 +47,38 @@ class BuildHomePageError extends StatelessWidget {
   }
 }
 
-class BuildHomePageLoaded extends StatelessWidget {
+class BuildHomePageLoaded extends ConsumerWidget {
   final List<Drinks> drinkList;
   const BuildHomePageLoaded({this.drinkList});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, watch) {
+    final themeSwitcher = watch(themeSwitcherProvider);
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      appBar: AppBar(
+        leading: Container(),
+        // backgroundColor: Color.fromARGB(255, 78, 168, 209),
+        actions: [
+          IconButton(
+            icon: Icon(
+                themeSwitcher.isDark ? Icons.nightlight_round : Icons.wb_sunny),
+            onPressed: () {
+              themeSwitcher.isDark
+                  ? themeSwitcher.isDark = false
+                  : themeSwitcher.isDark = true;
+            },
+          ),
+        ],
+      ),
       body: (drinkList != null)
           ? ListView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: drinkList.length,
               itemBuilder: (context, index) {
-                return FadeInRight(
-                  delay: Duration(milliseconds: 50 * index),
-                  child: BuildDrinkCard(drink: drinkList[index]),
-                );
+                return BuildDrinkCard(drink: drinkList[index]);
               },
             )
           : Container(
-              child: const Text('Error'),
+              child: const Text('Error, try again..'),
             ),
     );
   }
@@ -83,55 +95,86 @@ class BuildDrinkCard extends StatelessWidget {
         Navigator.of(context).pushNamed('/detail-page');
       },
       child: Card(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          margin: EdgeInsets.all(15),
-          elevation: 5,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    margin: EdgeInsets.only(left: 30),
-                    width: 200,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${drink.strDrink}',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        Text('${drink.idDrink}'),
-                      ],
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        margin: EdgeInsets.all(15),
+        elevation: 5,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+              flex: 3,
+              child: Container(
+                margin: EdgeInsets.only(left: 30),
+                width: 200,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20),
+                    Text(
+                      '${drink.strDrink}',
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    // Text('${drink.idDrink}'),
+                    GetIngredientsWidgets(ingredients: drink.ingredients),
+                  ],
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 2,
+              child: Column(
+                children: [
+                  SizedBox(
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      child: FadeInImage(
+                        placeholder: AssetImage('assets/images/loading.gif'),
+                        image: NetworkImage('${drink.strDrinkThumb}'),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        width: 100,
-                        height: 100,
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: FadeInImage(
-                            placeholder:
-                                AssetImage('assets/images/loading.gif'),
-                            image: NetworkImage('${drink.strDrinkThumb}'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class GetIngredientsWidgets extends StatelessWidget {
+  final List<String> ingredients;
+  const GetIngredientsWidgets({this.ingredients});
+  @override
+  Widget build(BuildContext context) {
+    ingredients.clear();
+    ingredients.add('primero');
+    ingredients.add('segundo');
+    ingredients.add('tercero');
+    ingredients.add('cuarto');
+    ingredients.add('quinto');
+    ingredients.add('sexto');
+    ingredients.add('septimo');
+
+    List<Widget> list = [];
+    for (var i = 0; i < ingredients.length; i++) {
+      list.add(Text('* ${ingredients[i]}',
+          style: Theme.of(context).textTheme.bodyText2));
+      if (i >= 2) {
+        if (ingredients.length < 3) {
+          break;
+        }
+        int preresto = ingredients.length - 1;
+        int resto = preresto - i;
+        list.add(Text('${resto.toString()} more ingredients'));
+        break;
+      }
+    }
+    return new Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: list,
     );
   }
 }

@@ -26,7 +26,7 @@ class BuildDetailPageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(child: CircularProgressIndicator()),
     );
   }
@@ -38,7 +38,7 @@ class BuildDetailPageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(
         child: Text(error),
       ),
@@ -50,6 +50,7 @@ class BuildDetailPageInitial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(
         child: const Text('Iniating...'),
       ),
@@ -64,7 +65,7 @@ class BuildDetailPageLoaded extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Color.fromARGB(255, 78, 168, 209),
       appBar: AppBar(
         title: Text(
           '${drink.strDrink}',
@@ -78,16 +79,26 @@ class BuildDetailPageLoaded extends StatelessWidget {
           margin: EdgeInsets.all(20),
           child: Center(
             child: Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.all(20),
-                      child: FadeInImage(
-                        placeholder: AssetImage('assets/images/loading.gif'),
-                        image: NetworkImage('${drink.strDrinkThumb}'),
-                        fit: BoxFit.cover,
+                    FadeInUp(
+                      duration: const Duration(milliseconds: 500),
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: FadeInImage(
+                            placeholder:
+                                AssetImage('assets/images/loading.gif'),
+                            image: NetworkImage('${drink.strDrinkThumb}'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                     Row(
@@ -100,9 +111,9 @@ class BuildDetailPageLoaded extends StatelessWidget {
                               child: const Text(
                                 'Ingredients',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.black54,
+                                  color: Colors.black45,
                                 ),
                               ),
                             ),
@@ -114,7 +125,7 @@ class BuildDetailPageLoaded extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     getTextWidgets(
-                                        drink.ingredientes, drink.measures),
+                                        drink.ingredients, drink.measures),
                                   ],
                                 ),
                               ),
@@ -131,9 +142,9 @@ class BuildDetailPageLoaded extends StatelessWidget {
                           child: const Text(
                             'How to prepare',
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black54,
+                              color: Colors.black45,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -161,7 +172,6 @@ class BuildDetailPageLoaded extends StatelessWidget {
 Widget getTextWidgets(List<String> ingredients, List<String> measures) {
   List<Widget> list = [];
   for (var i = 0; i < ingredients.length; i++) {
-    // list.add(new Text(ingredients[i]));
     list.add(Text('${measures[i]} - ${ingredients[i]}'));
   }
   return new Column(
