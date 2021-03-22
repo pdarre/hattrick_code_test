@@ -21,7 +21,7 @@ class BuildHomePageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 78, 168, 209),
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Container(
         child: Center(
           child: const CircularProgressIndicator(),
@@ -37,7 +37,7 @@ class BuildHomePageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 78, 168, 209),
+      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Container(
         child: Center(
           child: Text('$error'),
@@ -52,8 +52,23 @@ class BuildHomePageLoaded extends ConsumerWidget {
   const BuildHomePageLoaded({this.drinkList});
   @override
   Widget build(BuildContext context, watch) {
+    final themeSwitcher = watch(themeSwitcherProvider);
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 78, 168, 209),
+      appBar: AppBar(
+        leading: Container(),
+        // backgroundColor: Color.fromARGB(255, 78, 168, 209),
+        actions: [
+          IconButton(
+            icon: Icon(
+                themeSwitcher.isDark ? Icons.nightlight_round : Icons.wb_sunny),
+            onPressed: () {
+              themeSwitcher.isDark
+                  ? themeSwitcher.isDark = false
+                  : themeSwitcher.isDark = true;
+            },
+          ),
+        ],
+      ),
       body: (drinkList != null)
           ? ListView.builder(
               physics: BouncingScrollPhysics(),
@@ -97,13 +112,10 @@ class BuildDrinkCard extends StatelessWidget {
                     SizedBox(height: 20),
                     Text(
                       '${drink.strDrink}',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24,
-                          color: Colors.black54),
+                      style: Theme.of(context).textTheme.headline5,
                     ),
-                    Text('${drink.idDrink}'),
-                    // getTextWidgets(drink.ingredients),
+                    // Text('${drink.idDrink}'),
+                    GetIngredientsWidgets(ingredients: drink.ingredients),
                   ],
                 ),
               ),
@@ -132,13 +144,37 @@ class BuildDrinkCard extends StatelessWidget {
   }
 }
 
-Widget getTextWidgets(List<String> ingredients) {
-  List<Widget> list = [];
-  for (var i = 0; i < ingredients.length; i++) {
-    list.add(Text('${ingredients[i]}'));
+class GetIngredientsWidgets extends StatelessWidget {
+  final List<String> ingredients;
+  const GetIngredientsWidgets({this.ingredients});
+  @override
+  Widget build(BuildContext context) {
+    ingredients.clear();
+    ingredients.add('primero');
+    ingredients.add('segundo');
+    ingredients.add('tercero');
+    ingredients.add('cuarto');
+    ingredients.add('quinto');
+    ingredients.add('sexto');
+    ingredients.add('septimo');
+
+    List<Widget> list = [];
+    for (var i = 0; i < ingredients.length; i++) {
+      list.add(Text('* ${ingredients[i]}',
+          style: Theme.of(context).textTheme.bodyText2));
+      if (i >= 2) {
+        if (ingredients.length < 3) {
+          break;
+        }
+        int preresto = ingredients.length - 1;
+        int resto = preresto - i;
+        list.add(Text('${resto.toString()} more ingredients'));
+        break;
+      }
+    }
+    return new Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: list,
+    );
   }
-  return new Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: list,
-  );
 }
