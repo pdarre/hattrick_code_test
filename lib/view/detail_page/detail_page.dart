@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,7 +28,6 @@ class BuildDetailPageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(child: CircularProgressIndicator()),
     );
   }
@@ -39,7 +39,6 @@ class BuildDetailPageError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(
         child: Text(error),
       ),
@@ -51,7 +50,6 @@ class BuildDetailPageInitial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
       body: Center(
         child: const Text('Iniating...'),
       ),
@@ -59,25 +57,44 @@ class BuildDetailPageInitial extends StatelessWidget {
   }
 }
 
-class BuildDetailPageLoaded extends StatelessWidget {
+class BuildDetailPageLoaded extends ConsumerWidget {
   final Drinks drink;
   const BuildDetailPageLoaded({this.drink});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
-      appBar: AppBar(
-        title: Text(
-          '${drink.strDrink}',
-        ),
-        iconTheme: Theme.of(context).iconTheme,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
+  Widget build(BuildContext context, watch) {
+    final themeSwitcher = watch(themeSwitcherProvider);
+    return CupertinoPageScaffold(
+      // appBar: AppBar(
+      //   title: Text(
+      //     '${drink.strDrink}',
+      //   ),
+      //   iconTheme: Theme.of(context).iconTheme,
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   centerTitle: true,
+      // ),
+      navigationBar: CupertinoNavigationBar(
+        // backgroundColor: Colors.transparent,
+        // border: Border.all(width: 0, color: Colors.transparent),
+        // leading: Container(),
+        trailing: themeSwitcher.isDark
+            ? CupertinoButton(
+                child: Icon(Icons.nightlight_round),
+                onPressed: () {
+                  themeSwitcher.isDark = false;
+                },
+              )
+            : CupertinoButton(
+                child: Icon(Icons.wb_sunny),
+                onPressed: () {
+                  themeSwitcher.isDark = true;
+                },
+              ),
       ),
-      body: SingleChildScrollView(
+      child: SingleChildScrollView(
         child: Container(
+          padding: EdgeInsets.only(top: 70),
           margin: EdgeInsets.all(20),
           child: Center(
             child: Card(

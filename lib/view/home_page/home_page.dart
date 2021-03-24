@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,12 +19,25 @@ class HomePage extends ConsumerWidget {
   }
 }
 
+// class BuildHomePageLoading extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(leading: Container()),
+//       body: Container(
+//         child: Center(
+//           child: const CircularProgressIndicator(),
+//         ),
+//       ),
+//     );
+//   }
+// }
 class BuildHomePageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
-      body: Container(
+    return CupertinoPageScaffold(
+      // navigationBar: CupertinoNavigationBar(),
+      child: Container(
         child: Center(
           child: const CircularProgressIndicator(),
         ),
@@ -32,14 +46,30 @@ class BuildHomePageLoading extends StatelessWidget {
   }
 }
 
+// class BuildHomePageError extends StatelessWidget {
+//   final String error;
+//   const BuildHomePageError({this.error});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(leading: Container()),
+//       body: Container(
+//         child: Center(
+//           child: Text('$error'),
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 class BuildHomePageError extends StatelessWidget {
   final String error;
   const BuildHomePageError({this.error});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // backgroundColor: Color.fromARGB(255, 78, 168, 209),
-      body: Container(
+    return CupertinoPageScaffold(
+      // navigationBar: CupertinoNavigationBar(),
+      child: Container(
         child: Center(
           child: Text('$error'),
         ),
@@ -54,36 +84,77 @@ class BuildHomePageLoaded extends ConsumerWidget {
   @override
   Widget build(BuildContext context, watch) {
     final themeSwitcher = watch(themeSwitcherProvider);
-    return Scaffold(
-      appBar: AppBar(
+    return CupertinoPageScaffold(
+      navigationBar: CupertinoNavigationBar(
+        backgroundColor: Colors.transparent,
+        border: Border.all(width: 0, color: Colors.transparent),
         leading: Container(),
-        actions: [
-          IconButton(
-            icon: Icon(
-                themeSwitcher.isDark ? Icons.nightlight_round : Icons.wb_sunny),
-            onPressed: () {
-              themeSwitcher.isDark
-                  ? themeSwitcher.isDark = false
-                  : themeSwitcher.isDark = true;
-            },
-          ),
-        ],
+        trailing: themeSwitcher.isDark
+            ? CupertinoButton(
+                child: Icon(Icons.nightlight_round),
+                onPressed: () {
+                  themeSwitcher.isDark = false;
+                },
+              )
+            : CupertinoButton(
+                child: Icon(Icons.wb_sunny),
+                onPressed: () {
+                  themeSwitcher.isDark = true;
+                },
+              ),
       ),
-      body: (drinkList != null)
-          ? ListView.builder(
-              physics: BouncingScrollPhysics(),
-              itemCount: drinkList.length,
-              itemBuilder: (context, index) {
-                print('$index');
-                return BuildDrinkCard(drink: drinkList[index]);
-              },
-            )
-          : Container(
-              child: const Text('Error, try again..'),
-            ),
+      child: Scaffold(
+        body: drinkList != null
+            ? ListView.builder(
+                physics: BouncingScrollPhysics(),
+                itemCount: drinkList.length,
+                itemBuilder: (context, index) {
+                  return BuildDrinkCard(drink: drinkList[index]);
+                },
+              )
+            : Container(
+                child: const Text('Error, try again..'),
+              ),
+      ),
     );
   }
 }
+
+// class BuildHomePageLoaded extends ConsumerWidget {
+//   final List<Drinks> drinkList;
+//   const BuildHomePageLoaded({this.drinkList});
+//   @override
+//   Widget build(BuildContext context, watch) {
+//     final themeSwitcher = watch(themeSwitcherProvider);
+//     return Scaffold(
+//       appBar: AppBar(
+//         leading: Container(),
+//         actions: [
+//           IconButton(
+//             icon: Icon(
+//                 themeSwitcher.isDark ? Icons.nightlight_round : Icons.wb_sunny),
+//             onPressed: () {
+//               themeSwitcher.isDark
+//                   ? themeSwitcher.isDark = false
+//                   : themeSwitcher.isDark = true;
+//             },
+//           ),
+//         ],
+//       ),
+//       body: (drinkList != null)
+//           ? ListView.builder(
+//               physics: BouncingScrollPhysics(),
+//               itemCount: drinkList.length,
+//               itemBuilder: (context, index) {
+//                 return BuildDrinkCard(drink: drinkList[index]);
+//               },
+//             )
+//           : Container(
+//               child: const Text('Error, try again..'),
+//             ),
+//     );
+//   }
+// }
 
 class BuildDrinkCard extends StatelessWidget {
   final Drinks drink;

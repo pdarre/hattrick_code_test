@@ -4,6 +4,7 @@ import '../../interfaces/coctail_repository_interface.dart';
 import '../../models/drink_model.dart';
 
 class CoktailRepository implements CoktailRepositoryInterface {
+  
   @override
   Future<List<Drinks>> getAllCoktails() async {
     try {
